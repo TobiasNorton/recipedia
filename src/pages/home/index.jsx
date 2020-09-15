@@ -24,7 +24,7 @@ class Home extends Component {
     // }
   }
 
-  advancedSearch = () => {
+  setToAdvancedSearch = () => {
     this.setState({
       isAdvancedSearch: true,
     })
@@ -38,7 +38,7 @@ class Home extends Component {
         <h3>What are you hungry for?</h3>
 
         {!this.state.isAdvancedSearch ? (
-          <Formik initialValues={{ keyword: '' }} onSubmit={this.onSubmit}>
+          <Formik initialValues={{ keyword: '' }} onSubmit={this.simpleSearch}>
             {({ status, isSubmitting }) => {
               return (
                 <Form>
@@ -46,7 +46,7 @@ class Home extends Component {
                   <button className="search-button" type="submit" disabled={isSubmitting}>
                     Search
                   </button>
-                  <button className="search-button" onClick={() => this.simpleSearch()}>
+                  <button className="search-button" onClick={() => this.setToAdvancedSearch()}>
                     Advanced
                   </button>
                   {status && status.error ? <p>{status.error}</p> : null}
@@ -62,14 +62,7 @@ class Home extends Component {
             {({ status, isSubmitting }) => {
               return (
                 <Form>
-                  <Field type="text" name="keyword"></Field>
-                  <button className="search-button" type="submit" disabled={isSubmitting}>
-                    Search
-                  </button>
-                  <button className="search-button" onClick={() => this.simpleSearch()}>
-                    Advanced
-                  </button>
-                  {status && status.error ? <p>{status.error}</p> : null}
+                  <p>This is the Advanced search form.</p>
                 </Form>
               )
             }}
