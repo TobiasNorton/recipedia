@@ -1,0 +1,15 @@
+.recipe-snippet {
+  display: flex;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid lightgray;
+
+  .recipe-snippet-right {
+    padding: 0 20px;
+
+    p {
+      color: gray;
+      text-align: left;
+    }
+  }
+}
