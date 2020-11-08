@@ -21,9 +21,12 @@ const Home = () => {
 
   const search = (values, apiKey) => {
     // TODO: Create all of the query param strings to be concatenated in the url
+    // Concatenate intolerances and cuisines into linked query strings
+    // Create query strings for other params
+    // Concat query params and search URL
     console.log('search values', values)
     const keyword = values && values.keyword
-    const recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=50`
+    const recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=100`
     console.log('keyword: ', keyword)
     axios.get(recipesSearchUrl).then((response) => {
       console.log('response.data', response && response.data && response.data)
@@ -45,27 +48,29 @@ const Home = () => {
   return (
     <div className="home">
       <h3>What are you hungry for?</h3>
+      <div className="search-form-container">
+        {!isAdvancedSearch ? (
+          <Formik initialValues={{ keyword: '' }} onSubmit={onSubmit}>
+            {({ status, isSubmitting }) => {
+              return (
+                <Form>
+                  <Field className="text-field" type="text" name="keyword"></Field>
+                  <button className="search-button" type="submit" disabled={isSubmitting}>
+                    Search
+                </button>
+                  <button className="search-button" onClick={() => setToAdvancedSearch()}>
+                    Advanced
+                </button>
+                  {status && status.error ? <p>{status.error}</p> : null}
+                </Form>
+              )
+            }}
+          </Formik>
+        ) : (
+            <AdvancedSearch search={search} backToSimpleSearch={backToSimpleSearch} />
+          )}
+      </div>
 
-      {!isAdvancedSearch ? (
-        <Formik initialValues={{ keyword: '' }} onSubmit={onSubmit}>
-          {({ status, isSubmitting }) => {
-            return (
-              <Form>
-                <Field type="text" name="keyword"></Field>
-                <button className="search-button" type="submit" disabled={isSubmitting}>
-                  Search
-                </button>
-                <button className="search-button" onClick={() => setToAdvancedSearch()}>
-                  Advanced
-                </button>
-                {status && status.error ? <p>{status.error}</p> : null}
-              </Form>
-            )
-          }}
-        </Formik>
-      ) : (
-          <AdvancedSearch search={search} backToSimpleSearch={backToSimpleSearch} />
-        )}
       {recipes.length
         ? recipes.map((recipe, index) => {
           const summary = `<p>${recipe.summary}</p>`

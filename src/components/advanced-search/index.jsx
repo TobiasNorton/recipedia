@@ -14,15 +14,16 @@ const index = ({ search, backToSimpleSearch }) => {
       {({ status, isSubmitting }) => {
         return (
           <Form className="advanced-search">
-            <Field type="text" name="keyword" placeholder="Type a keyword"></Field>
+            <Field className="text-field" type="text" name="keyword" placeholder="Type a keyword"></Field>
             <button className="search-button" type="submit" disabled={isSubmitting}>
               Search
-                </button>
+            </button>
             <button className="search-button" onClick={() => backToSimpleSearch()}>
               Back to Search
-                </button>
+            </button>
             {status && status.error ? <p>{status.error}</p> : null}
             <div className="advanced-options">
+              <div className="options-section-label">Intolerances to omit: </div>
               <div className="intolerances">
                 {INTOLERANCES.map((intolerance, index) => {
                   return (
@@ -30,7 +31,8 @@ const index = ({ search, backToSimpleSearch }) => {
                   )
                 })}
               </div>
-              <div>
+              <div className="options-section-label">Filter by cuisine-type:</div>
+              <div className="cuisines">
                 {CUISINES.map((cuisine, index) => {
                   return (
                     <button key={`${cuisine}-${index}`} className="option-button">{cuisine}</button>

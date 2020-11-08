@@ -1,17 +1,33 @@
-.advanced-options {
+.advanced-search {
   font-family: 'Poppins', sans-serif;
 
-  .option-button {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    margin: 5px;
-    padding: 8px 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: white;
+  .advanced-options {  
+      .options-section-label {
+        text-align: left;
+        margin: 5px;
+      }
+  
+      .intolerances, .cuisines {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+      }
+  
+      .option-button {
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        margin: 5px;
+        padding: 8px 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: white;
+      }
+    
+      .option-button:hover {
+        cursor: pointer;
+      }
   }
-
-  .option-button:hover {
-    cursor: pointer;
-  }
+  
 }
+
