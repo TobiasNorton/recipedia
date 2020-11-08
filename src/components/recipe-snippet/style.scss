@@ -1,8 +1,10 @@
 .recipe-snippet {
+  font-family: 'Poppins', sans-serif;
   display: flex;
   margin: 20px;
   padding: 20px;
   border: 1px solid lightgray;
+  max-width: 800px;
 
   .recipe-snippet-right {
     padding: 0 20px;

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import axios from 'axios'
-import RecipeSnippet from '../../components/recipe-snippet'
 import './style.scss'
+import RecipeSnippet from '../../components/recipe-snippet'
+import AdvancedSearch from '../../components/advanced-search'
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false)
@@ -23,8 +24,7 @@ const Home = () => {
     console.log('search values', values)
     const keyword = values && values.keyword
     const recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=50`
-    //const ingredientsUrl = `https://api.spoonacular.com/recipes/716429/information?includeNutrition=true`
-    console.log('keywordddd', keyword)
+    console.log('keyword: ', keyword)
     axios.get(recipesSearchUrl).then((response) => {
       console.log('response.data', response && response.data && response.data)
       setRecipes(response.data && response.data.results)
@@ -33,13 +33,17 @@ const Home = () => {
 
   const setToAdvancedSearch = () => {
     setIsAdvancedSearch(true)
+    setRecipes([])
   }
-
+  const backToSimpleSearch = () => {
+    setIsAdvancedSearch(false)
+    setRecipes([])
+  }
   // Have a form for advanced vs simple
   // If its a simple search, show the buttons, else show the whole form
 
   return (
-    <div>
+    <div className="home">
       <h3>What are you hungry for?</h3>
 
       {!isAdvancedSearch ? (
@@ -60,31 +64,20 @@ const Home = () => {
           }}
         </Formik>
       ) : (
-        <Formik
-          initialValues={{ keyword: '', ingredients: [], cuisine: '' }}
-          onSubmit={() => search()}
-        >
-          {({ status, isSubmitting }) => {
-            return (
-              <Form>
-                <p>This is the Advanced search form.</p>
-              </Form>
-            )
-          }}
-        </Formik>
-      )}
+          <AdvancedSearch search={search} backToSimpleSearch={backToSimpleSearch} />
+        )}
       {recipes.length
         ? recipes.map((recipe, index) => {
-            const summary = `<p>${recipe.summary}</p>`
-            return (
-              <RecipeSnippet
-                key={recipe.id}
-                summary={summary}
-                title={recipe.title}
-                image={recipe.image}
-              />
-            )
-          })
+          const summary = `<p>${recipe.summary}</p>`
+          return (
+            <RecipeSnippet
+              key={recipe.id}
+              summary={summary}
+              title={recipe.title}
+              image={recipe.image}
+            />
+          )
+        })
         : null}
       <p>
         I created this using the{' '}

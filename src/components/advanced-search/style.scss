@@ -1,0 +1,17 @@
+.advanced-options {
+  font-family: 'Poppins', sans-serif;
+
+  .option-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    margin: 5px;
+    padding: 8px 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+  }
+
+  .option-button:hover {
+    cursor: pointer;
+  }
+}
