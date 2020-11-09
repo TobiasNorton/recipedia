@@ -23,6 +23,12 @@
         border-radius: 5px;
         background-color: white;
       }
+
+      .selected-option {
+        border: none;
+        background-color: black;
+        color: white;
+      }
     
       .option-button:hover {
         cursor: pointer;

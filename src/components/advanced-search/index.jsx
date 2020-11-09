@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik'
 import './style.scss'
 import { INTOLERANCES, CUISINES } from '../../constants'
 
-const index = ({ search, backToSimpleSearch }) => {
+const AdvancedSearch = ({ onSubmit, backToSimpleSearch }) => {
 
   return (
     <Formik
-      initialValues={{ keyword: '', ingredients: [], cuisine: '' }}
-      onSubmit={() => search()}
-
+      initialValues={{ keyword: '', intolerances: [], cuisines: [] }}
+      onSubmit={onSubmit}
     >
-      {({ status, isSubmitting }) => {
+      {({ values, status, isSubmitting }) => {
         return (
           <Form className="advanced-search">
             <Field className="text-field" type="text" name="keyword" placeholder="Type a keyword"></Field>
@@ -27,7 +26,7 @@ const index = ({ search, backToSimpleSearch }) => {
               <div className="intolerances">
                 {INTOLERANCES.map((intolerance, index) => {
                   return (
-                    <button key={`${intolerance}-${index}`} className="option-button">{intolerance}</button>
+                    <button key={`${intolerance}-${index}`} type="button" className="option-button" onClick={() => values.intolerances.push(intolerance.value)}>{intolerance.label}</button>
                   )
                 })}
               </div>
@@ -35,7 +34,7 @@ const index = ({ search, backToSimpleSearch }) => {
               <div className="cuisines">
                 {CUISINES.map((cuisine, index) => {
                   return (
-                    <button key={`${cuisine}-${index}`} className="option-button">{cuisine}</button>
+                    <button key={`${cuisine}-${index}`} type="button" className="option-button" onClick={() => values.cuisines.push(cuisine.value)}>{cuisine.label}</button>
                   )
                 })}
               </div>
@@ -48,4 +47,4 @@ const index = ({ search, backToSimpleSearch }) => {
   );
 }
 
-export default index;
+export default AdvancedSearch;

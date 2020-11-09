@@ -20,14 +20,25 @@ const Home = () => {
   }
 
   const search = (values, apiKey) => {
-    // TODO: Create all of the query param strings to be concatenated in the url
-    // Concatenate intolerances and cuisines into linked query strings
-    // Create query strings for other params
-    // Concat query params and search URL
     console.log('search values', values)
     const keyword = values && values.keyword
-    const recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=100`
+    const intolerances = values && values.intolerances && values.intolerances.join(',')
+    const intolerancesQueryString = `&intolerances="${intolerances}"`
+    const cuisine = values && values.cuisines && values.cuisines.join(',')
+    const cuisineQueryString = `&cuisine="${cuisine}"`
+
+    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=100`
     console.log('keyword: ', keyword)
+
+    if (intolerances.length > 0) {
+      recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`
+    }
+
+    if (cuisine.length > 0) {
+      recipesSearchUrl = `${recipesSearchUrl}${cuisineQueryString}`
+    }
+
+    console.log('recipesSearchUrl', recipesSearchUrl)
     axios.get(recipesSearchUrl).then((response) => {
       console.log('response.data', response && response.data && response.data)
       setRecipes(response.data && response.data.results)
@@ -67,7 +78,7 @@ const Home = () => {
             }}
           </Formik>
         ) : (
-            <AdvancedSearch search={search} backToSimpleSearch={backToSimpleSearch} />
+            <AdvancedSearch onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
           )}
       </div>
 
