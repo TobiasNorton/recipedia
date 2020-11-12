@@ -4,6 +4,7 @@ import axios from 'axios'
 import './style.scss'
 import RecipeSnippet from '../../components/recipe-snippet'
 import AdvancedSearch from '../../components/advanced-search'
+import AdvancedSearchTest from '../../components/advanced-search-test'
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false)
@@ -24,17 +25,17 @@ const Home = () => {
     const keyword = values && values.keyword
     const intolerances = values && values.intolerances && values.intolerances.join(',')
     const intolerancesQueryString = `&intolerances="${intolerances}"`
-    const cuisine = values && values.cuisines && values.cuisines.join(',')
-    const cuisineQueryString = `&cuisine="${cuisine}"`
+    const cuisines = values && values.cuisines && values.cuisines.join(',')
+    const cuisineQueryString = `&cuisine="${cuisines}"`
 
     let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=100`
     console.log('keyword: ', keyword)
 
-    if (intolerances.length > 0) {
+    if (intolerances && intolerances.length > 0) {
       recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`
     }
 
-    if (cuisine.length > 0) {
+    if (cuisines && cuisines.length > 0) {
       recipesSearchUrl = `${recipesSearchUrl}${cuisineQueryString}`
     }
 
@@ -78,7 +79,7 @@ const Home = () => {
             }}
           </Formik>
         ) : (
-            <AdvancedSearch onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
+            <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
           )}
       </div>
 
@@ -87,7 +88,8 @@ const Home = () => {
           const summary = `<p>${recipe.summary}</p>`
           return (
             <RecipeSnippet
-              key={recipe.id}
+              id={recipe.id}
+              key={`recipe-${index}-${recipe.id}`}
               summary={summary}
               title={recipe.title}
               image={recipe.image}

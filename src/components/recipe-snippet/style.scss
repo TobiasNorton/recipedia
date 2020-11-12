@@ -1,5 +1,4 @@
 .recipe-snippet {
-  font-family: 'Poppins', sans-serif;
   display: flex;
   margin: 20px;
   padding: 20px;
@@ -12,6 +11,10 @@
     p {
       color: gray;
       text-align: left;
+    }
+
+    .more-info {
+      text-align: right;
     }
   }
 }

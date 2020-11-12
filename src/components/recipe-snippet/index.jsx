@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './style.scss'
 
-const RecipeSnippet = ({ title, image, summary }) => {
+const RecipeSnippet = ({ id, title, image, summary }) => {
   const abbreviatedSummary = summary.slice(0, 330)
 
   return (
@@ -10,6 +11,7 @@ const RecipeSnippet = ({ title, image, summary }) => {
       <div className="recipe-snippet-right">
         <h3>{title}</h3>
         <p dangerouslySetInnerHTML={{ __html: `${abbreviatedSummary}...` }}></p>
+        <Link to={`/recipes/${id}`} className="more-info">More Information</Link>
       </div>
     </div>
   )
