@@ -82,21 +82,23 @@ const Home = () => {
             <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
           )}
       </div>
+      <div className="recipe-results">
+        {recipes.length
+          ? recipes.map((recipe, index) => {
+            const summary = `<p>${recipe.summary}</p>`
+            return (
+              <RecipeSnippet
+                id={recipe.id}
+                key={`recipe-${index}-${recipe.id}`}
+                summary={summary}
+                title={recipe.title}
+                image={recipe.image}
+              />
+            )
+          })
+          : null}
+      </div>
 
-      {recipes.length
-        ? recipes.map((recipe, index) => {
-          const summary = `<p>${recipe.summary}</p>`
-          return (
-            <RecipeSnippet
-              id={recipe.id}
-              key={`recipe-${index}-${recipe.id}`}
-              summary={summary}
-              title={recipe.title}
-              image={recipe.image}
-            />
-          )
-        })
-        : null}
       <p>
         I created this using the{' '}
         <a href="https://spoonacular.com/food-api" target="_blank">
