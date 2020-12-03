@@ -11,15 +11,31 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [recipes, setRecipes] = useState([])
   const [couldNotFindRecipes, setCouldNotFindRecipes] = useState(false)
+  const [pageNumbers, setPageNumbers] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const resultsPerPage = 10
+  const numberOfPages = Math.ceil(recipes.length / resultsPerPage)
+  const indexOfLastRecipe = (currentPage * resultsPerPage) - 1
+  const indexOfFirstRecipe = (indexOfLastRecipe - resultsPerPage) + 1
+  const recipesToDisplay = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe + 1)
+
+  useEffect(() => {
+    const numbers = []
+    for (let i = 1; i <= numberOfPages; i++) {
+      numbers.push(i)
+    }
+    setPageNumbers(numbers)
+  }, [recipes])
 
   const refreshSearch = () => {
     setSearchQuery('')
     setRecipes([])
     setCouldNotFindRecipes(false)
+    setCurrentPage(1)
   }
 
   const onSubmit = (values, { setStatus, setSubmitting, resetForm }) => {
-    console.log('onSubmit has definitely been clicked.', values)
     const apiKey = '7115e309409d4387a6369108cd7185fd'
     try {
       search(values, apiKey)
@@ -102,7 +118,7 @@ const Home = () => {
                     <h3>{`Showing ${recipes.length} results for "${searchQuery}"`}</h3>
                     <button onClick={() => refreshSearch()}>Back to Search</button>
                     <div className="recipe-results">
-                      {recipes.map((recipe, index) => {
+                      {recipesToDisplay.map((recipe, index) => {
                         const summary = `<p>${recipe.summary}</p>`
                         return (
                           <RecipeSnippet
@@ -115,6 +131,11 @@ const Home = () => {
                         )
                       })}
                     </div>
+                    {pageNumbers.length > 1 && pageNumbers.map(number => {
+                      return (
+                        <button key={`page-${number}`} onClick={() => setCurrentPage(number)}>{number}</button>
+                      )
+                    })}
                     <button onClick={() => refreshSearch()}>Back to Search</button>
                   </div>
                 ) : (
