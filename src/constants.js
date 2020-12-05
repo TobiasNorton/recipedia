@@ -85,3 +85,5 @@ export const CUISINES = [
   { value: 'thai', label: 'Thai' },
   { value: 'vietnamese', label: 'Vietnamese' },
 ]
+
+export const API_KEY = '7115e309409d4387a6369108cd7185fd'

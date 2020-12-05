@@ -5,6 +5,9 @@ import './style.scss'
 import RecipeSnippet from '../../components/recipe-snippet'
 import AdvancedSearch from '../../components/advanced-search'
 import AdvancedSearchTest from '../../components/advanced-search-test'
+import MultiSelect from '../../components/multi-select'
+import { INTOLERANCES, API_KEY } from '../../constants'
+import MultiSelectCheckbox from '../../components/multi-select-checkbox'
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false)
@@ -13,6 +16,9 @@ const Home = () => {
   const [couldNotFindRecipes, setCouldNotFindRecipes] = useState(false)
   const [pageNumbers, setPageNumbers] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
+
+  const [formValues, setFormValues] = useState()
+  const [selectedIntolerances, setSelectedIntolerances] = useState([])
 
   const resultsPerPage = 10
   const numberOfPages = Math.ceil(recipes.length / resultsPerPage)
@@ -28,6 +34,10 @@ const Home = () => {
     setPageNumbers(numbers)
   }, [recipes])
 
+  useEffect(() => {
+    console.log('USE_EFFECT: selectedIntolerances have changed at the top level', selectedIntolerances)
+  })
+
   const refreshSearch = () => {
     setSearchQuery('')
     setRecipes([])
@@ -35,34 +45,46 @@ const Home = () => {
     setCurrentPage(1)
   }
 
-  const onSubmit = (values, { setStatus, setSubmitting, resetForm }) => {
-    const apiKey = '7115e309409d4387a6369108cd7185fd'
+  const handleChange = (event) => {
+    const target = event.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    console.log('target.name', target.name)
+    console.log('value', value)
+    setFormValues(target.value)
+  }
+
+  const onSubmit = (event) => {
     try {
-      search(values, apiKey)
+      search(event)
     } catch (error) {
-      setStatus({ error: error.message })
+      console.log(error)
     }
   }
 
-  const search = (values, apiKey) => {
-    console.log('search values', values)
-    const keyword = values && values.keyword
-    const intolerances = values && values.intolerances && values.intolerances.join(',')
+  const search = (event) => {
+    console.log('Did we reload yet')
+    event.preventDefault()
+    const keyword = searchQuery
+    const intolerances = selectedIntolerances.join(',')
+    console.log('intolerances joined: ', intolerances)
+    // console.log('search values', values)
+    // const keyword = values && values.keyword
+    // const intolerances = values && values.intolerances && values.intolerances.join(',')
     const intolerancesQueryString = `&intolerances="${intolerances}"`
-    const cuisines = values && values.cuisines && values.cuisines.join(',')
-    const cuisineQueryString = `&cuisine="${cuisines}"`
+    // const cuisines = values && values.cuisines && values.cuisines.join(',')
+    // const cuisineQueryString = `&cuisine="${cuisines}"`
     setSearchQuery(keyword)
 
-    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}&addRecipeInformation=true&number=100`
+    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${keyword}&addRecipeInformation=true&number=100`
     console.log('keyword: ', keyword)
 
     if (intolerances && intolerances.length > 0) {
       recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`
     }
 
-    if (cuisines && cuisines.length > 0) {
-      recipesSearchUrl = `${recipesSearchUrl}${cuisineQueryString}`
-    }
+    // if (cuisines && cuisines.length > 0) {
+    //   recipesSearchUrl = `${recipesSearchUrl}${cuisineQueryString}`
+    // }
 
     console.log('recipesSearchUrl', recipesSearchUrl)
     axios.get(recipesSearchUrl).then((response) => {
@@ -90,25 +112,21 @@ const Home = () => {
           <div className="search-form-container">
             <h3>What are you hungry for?</h3>
             {!isAdvancedSearch ? (
-              <Formik initialValues={{ keyword: '' }} onSubmit={onSubmit}>
-                {({ status, isSubmitting }) => {
-                  return (
-                    <Form>
-                      <Field className="text-field" type="text" name="keyword"></Field>
-                      <button className="search-button" type="submit" disabled={isSubmitting}>
+                    <form onSubmit={onSubmit}>
+                      <input className="text-field" type="text" name="keyword" onChange={handleChange}></input>
+                      <button className="search-button" type="submit" 
+                      >
                         Search
                       </button>
                       <button className="search-button" onClick={() => setToAdvancedSearch()}>
                         Advanced
                       </button>
-                      {status && status.error ? <p>{status.error}</p> : null}
-                    </Form>
-                  )
-                }}
-              </Formik>
-            ) : (
+                      <MultiSelectCheckbox listType="intolerances" setSelection={setSelectedIntolerances} options={INTOLERANCES} handleChange={handleChange} />
+                    </form>
+                  ) : (
                 <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
-              )}
+              )
+            }
           </div>
         ) : (
             <div className="recipe-results-container">
