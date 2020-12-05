@@ -1,33 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Field } from 'formik'
 import './style.scss'
 
-const MultiSelectCheckbox = ({listType, options, handleChange, checkboxState, setSelection}) => {
+const MultiSelectCheckbox = ({filterType, options, handleSelect}) => {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState([])
 
   useEffect(() => {
-    console.log("selectedOptions have changed [USE_EFFECT]", selectedOptions)
+    handleSelect(selectedOptions, filterType)
   }, [selectedOptions])
 
   const onChange = (event) => {
-    console.log('onChange: ', event.target)
     if (!selectedOptions.includes(event.target.name)) {
-      setSelectedOptions(selectedOptions.concat(event.target.name))
+      setSelectedOptions([...selectedOptions, event.target.name])
+    } else {
+      const updatedSelectedOptions = selectedOptions.filter(option => option !== event.target.name)
+      setSelectedOptions(updatedSelectedOptions)
     }
-
-    if (selectedOptions.includes(event.target.name)) {
-      const targetIndex = selectedOptions.indexOf(event.target.name)
-      console.log('targetIndex', targetIndex)
-      const selectedOptionsShallowCopy = selectedOptions.slice()
-      selectedOptionsShallowCopy.splice(targetIndex, 1)
-      console.log('selectedOptionsCopy', selectedOptionsShallowCopy)
-      console.log('selectedOptions', selectedOptions)
-      setSelectedOptions(selectedOptionsShallowCopy)
-    }
-    console.log('selectedOptions', selectedOptions)
-    setSelection(selectedOptions)
-    handleChange(event)
   }
 
   return (
@@ -38,7 +26,7 @@ const MultiSelectCheckbox = ({listType, options, handleChange, checkboxState, se
             <div id={option} key={`input-${option}-${index}`} className="selected-option">{option}</div>
           )}
         )}
-      </div>) : `Select ${listType}...checkbox...`}</div>
+      </div>) : `Select ${filterType}...`}</div>
       {dropdownIsOpen && (
           <div className="multiselect-dropdown">{options.map((option, index) => {
             return (
@@ -53,7 +41,5 @@ const MultiSelectCheckbox = ({listType, options, handleChange, checkboxState, se
     </div>
   );
 }
-
-// What if we 
 
 export default MultiSelectCheckbox;
