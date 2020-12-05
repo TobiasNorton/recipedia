@@ -1,0 +1,46 @@
+.multiselect {
+  font-family: 'Poppins', sans-serif;
+  max-width: 500px;
+  margin: auto;
+
+  .multiselect-field {
+    color: gray;
+    border: 1px solid lightgray;
+    text-align: left;
+    padding: 7px 18px;
+  }
+
+  .selected-option {
+    font-family: 'Poppins', sans-serif;
+    background-color: lightgray;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+  }
+
+  .multiselect-dropdown {
+    border: 1px solid lightgray;
+    overflow: scroll;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  
+    .multiselect-li {
+      text-align: left;
+      list-style: none;
+      padding: 10px 18px;
+    }
+
+    .multiselect-li:hover {
+      cursor: pointer;
+      color: white;
+      background-color: hsl(201, 50%, 50%)
+    }
+  }
+}
+
+
+

@@ -3,16 +3,12 @@ import { Formik, Form, Field } from 'formik'
 import { Multiselect } from 'multiselect-react-dropdown';
 import '../advanced-search/style.scss'
 import { INTOLERANCES, CUISINES } from '../../constants'
+import MultiSelectCheckbox from '../multi-select-checkbox';
 
 const AdvancedSearch = ({ onSubmit, backToSimpleSearch }) => {
 
   const [selectedIntolerances, setSelectedIntolerances] = useState([])
   const [selectedCuisines, setSelectedCuisines] = useState([])
-
-  const blah = (ints) => {
-    setSelectedIntolerances(ints)
-    console.log(selectedIntolerances)
-  }
 
   return (
 
@@ -26,21 +22,8 @@ const AdvancedSearch = ({ onSubmit, backToSimpleSearch }) => {
       </button>
       <div className="advanced-options">
         <div className="options-section-label">Intolerances to omit: </div>
-        <Multiselect
-          options={INTOLERANCES} // Options to display in the dropdown
-          selectedValues={selectedIntolerances} // Preselected value to persist in dropdown
-          onSelect={() => blah(selectedIntolerances)} // Function will trigger on select event
-          // onRemove={} // Function will trigger on remove event
-          displayValue="label" // Property label to display in the dropdown options
-        />
+        <MultiSelectCheckbox />
         <div className="options-section-label">Filter by cuisine-type:</div>
-        <Multiselect
-          options={CUISINES} // Options to display in the dropdown
-          // selectedValues={selectedCuisines} // Preselected value to persist in dropdown
-          // onSelect={setSelectedCuisines(selectedCuisines)} // Function will trigger on select event
-          // onRemove={} // Function will trigger on remove event
-          displayValue="label" // Property name to display in the dropdown options
-        />
       </div>
 
     </form>
