@@ -16,8 +16,9 @@ const MultiSelectCheckbox = ({filterType, options, handleSelect}) => {
       const updatedSelectedOptions = selectedOptions.filter(option => option !== event.target.name)
       setSelectedOptions(updatedSelectedOptions)
     }
+    handleSelect(selectedOptions, filterType)
   }
-
+  
   return (
     <div className="multiselect-checkbox">
       <div className="multiselect-field" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>{selectedOptions.length > 0 ? (
@@ -27,8 +28,9 @@ const MultiSelectCheckbox = ({filterType, options, handleSelect}) => {
           )}
         )}
       </div>) : `Select ${filterType}...`}</div>
-      {dropdownIsOpen && (
-          <div className="multiselect-dropdown">{options.map((option, index) => {
+      {/* {dropdownIsOpen &&  */}
+        
+          <div className={`multiselect-dropdown ${!dropdownIsOpen ? 'hidden' : ''}`}>{options.map((option, index) => {
             return (
               <div key={`${option.value}-${index}`} className="multiselect-filter">
                 <input id={option.value} name={option.value} type="checkbox" onChange={onChange}></input>
@@ -36,8 +38,8 @@ const MultiSelectCheckbox = ({filterType, options, handleSelect}) => {
               </div>  
             )})}
           </div>
-        )
-      }
+        
+      {/* } */}
     </div>
   );
 }

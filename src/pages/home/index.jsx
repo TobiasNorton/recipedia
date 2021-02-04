@@ -6,11 +6,14 @@ import AdvancedSearch from '../../components/advanced-search'
 import AdvancedSearchTest from '../../components/advanced-search-test'
 import { INTOLERANCES, API_KEY } from '../../constants'
 import MultiSelectCheckbox from '../../components/multi-select-checkbox'
+import MultiSelect from '../../components/multi-select'
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedIntolerances, setSelectedIntolerances] = useState([])
+  const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState([])
+  const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState([])
   const [recipes, setRecipes] = useState([])
   const [couldNotFindRecipes, setCouldNotFindRecipes] = useState(false)
   const [pageNumbers, setPageNumbers] = useState([])
@@ -33,6 +36,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log('USE_EFFECT: selectedIntolerances have changed at the top level', selectedIntolerances)
+    console.log(selectedIntolerances)
   })
 
   const refreshSearch = () => {
@@ -43,16 +47,17 @@ const Home = () => {
     setIsSearchSubmitted(false)
   }
 
-  const handleChange = (event) => {
+  const handleKeywordChange = (event) => {
     const target = event.target
-    console.log('target.name', target.name)
     setSearchQuery(target.value)
   }
 
-  const handleSelect = (filters, filterType) => {
-    console.log('filterType', filterType)
+  const handleCheckboxSelect = (filters, filterType) => {
     if (filterType === 'intolerances') {
-      setSelectedIntolerances(filters)
+      setSelectedCheckboxIntolerances(filters)
+    }
+    if (filterType === 'cuisines') {
+      setSelectedCheckboxCuisines(filters)
     }
   }
 
@@ -68,8 +73,11 @@ const Home = () => {
     event.preventDefault()
     setIsSearchSubmitted(true)
     const queryString = `&query=${searchQuery}`
-    const intolerances = selectedIntolerances.join(',')
+    const intolerances = selectedCheckboxIntolerances.join(',')
     const intolerancesQueryString = `&intolerances=${intolerances}`
+    const cuisines = selectedCheckboxCuisines.join(',')
+    const cuisinesQueryString = `&cuisine=${cuisines}`
+
     setSearchQuery(searchQuery)
 
     let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
@@ -78,9 +86,11 @@ const Home = () => {
     if (searchQuery) {
       recipesSearchUrl = `${recipesSearchUrl}${queryString}`
     }
-
     if (intolerances && intolerances.length > 0) {
       recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`
+    }
+    if (cuisines && cuisines.length > 0) {
+      recipesSearchUrl = `${recipesSearchUrl}${cuisinesQueryString}`
     }
 
     console.log('recipesSearchUrl', recipesSearchUrl)
@@ -111,18 +121,16 @@ const Home = () => {
             <h3>What are you hungry for?</h3>
             {!isAdvancedSearch ? (
                     <form onSubmit={onSubmit}>
-                      <input className="text-field" type="text" name="keyword" onChange={handleChange}></input>
-                      <button className="search-button" type="submit" 
-                      >
+                      <input className="text-field" type="text" name="keyword" onChange={handleKeywordChange}></input>
+                      <button className="search-button" type="submit">
                         Search
                       </button>
                       <button className="search-button" onClick={() => setToAdvancedSearch()}>
                         Advanced
                       </button>
-                      <MultiSelectCheckbox filterType="intolerances" setSelection={setSelectedIntolerances} options={INTOLERANCES} handleSelect={handleSelect} />
                     </form>
                   ) : (
-                <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} />
+                <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} handleKeywordChange={handleKeywordChange} handleCheckboxSelect={handleCheckboxSelect}/>
               )
             }
           </div>

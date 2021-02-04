@@ -11,6 +11,7 @@
     }
 
     .search-button {
+      font-family: 'Poppins', sans-serif;
       background-color: hsl(154, 50%, 50%);
       color: white;
       font-size: 18px;
@@ -20,7 +21,7 @@
       margin: 10px;
     }
   }
-  
+
   .recipe-results {
     max-width: 800px;
     margin: auto;

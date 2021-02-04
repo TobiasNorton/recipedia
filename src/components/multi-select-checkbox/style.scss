@@ -12,6 +12,7 @@
     .filters-container {
       display: flex;
       justify-content: flex-start;
+      flex-wrap: wrap;
 
       .selected-option {
         font-family: 'Poppins', sans-serif;
@@ -44,5 +45,9 @@
         width: 100%;
       }
     }
+  }
+
+  .hidden {
+    display: none;
   }
 }
