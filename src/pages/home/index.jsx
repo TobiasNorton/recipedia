@@ -3,15 +3,11 @@ import axios from 'axios'
 import './style.scss'
 import RecipeSnippet from '../../components/recipe-snippet'
 import AdvancedSearch from '../../components/advanced-search'
-import AdvancedSearchTest from '../../components/advanced-search-test'
-import { INTOLERANCES, API_KEY } from '../../constants'
-import MultiSelectCheckbox from '../../components/multi-select-checkbox'
-import MultiSelect from '../../components/multi-select'
+import { API_KEY } from '../../constants'
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedIntolerances, setSelectedIntolerances] = useState([])
   const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState([])
   const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState([])
   const [recipes, setRecipes] = useState([])
@@ -33,11 +29,6 @@ const Home = () => {
     }
     setPageNumbers(numbers)
   }, [recipes])
-
-  useEffect(() => {
-    console.log('USE_EFFECT: selectedIntolerances have changed at the top level', selectedIntolerances)
-    console.log(selectedIntolerances)
-  })
 
   const refreshSearch = () => {
     setSearchQuery('')
@@ -130,7 +121,7 @@ const Home = () => {
                       </button>
                     </form>
                   ) : (
-                <AdvancedSearchTest onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} handleKeywordChange={handleKeywordChange} handleCheckboxSelect={handleCheckboxSelect}/>
+                <AdvancedSearch onSubmit={onSubmit} backToSimpleSearch={backToSimpleSearch} handleKeywordChange={handleKeywordChange} handleCheckboxSelect={handleCheckboxSelect}/>
               )
             }
           </div>
