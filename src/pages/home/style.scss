@@ -5,6 +5,7 @@
 
     .text-field {
       font-family: 'Poppins', sans-serif;
+      min-width: 240px;
       padding: 5px 10px;
       font-size: 16px;
       margin-right: 10px;
@@ -15,10 +16,28 @@
       background-color: hsl(154, 50%, 50%);
       color: white;
       font-size: 18px;
-      padding: 8px 20px;
+      padding: 8px 50px;
       border: none;
       border-radius: 5px;
-      margin: 10px;
+      margin: 10px 10px 10px 16px;
+    }
+
+    .advanced-button {
+      font-family: 'Poppins', sans-serif;
+      background: none;
+      color: grey;
+      font-size: 14px;
+      padding: 6px 8px;
+      line-height: 14px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 10px 10px 16px;
+      text-decoration: underline;
+    }
+
+    .search-button,
+    .advanced-button:hover {
+      cursor: pointer;
     }
   }
 

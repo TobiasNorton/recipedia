@@ -21,6 +21,16 @@
         border: none;
         padding: 5px 10px;
         margin: 5px;
+        display: flex;
+        align-items: center;
+
+        .close {
+          background: none;
+          color: white;
+          border: none;
+          padding: 0;
+          margin-left: 10px;
+        }
       }
     }
   }

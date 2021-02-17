@@ -24,7 +24,10 @@ const MultiSelectCheckbox = ({filterType, options, handleSelect}) => {
       <div className="multiselect-field" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>{selectedOptions.length > 0 ? (
         <div className="filters-container">{selectedOptions.map((option, index) => {
           return (
-            <div id={option} key={`input-${option}-${index}`} className="selected-option">{option}</div>
+            <div className="selected-option">
+              <div id={option} key={`input-${option}-${index}`}>{option}</div>
+              <button className="close"><i className="fas fa-times-circle"></i></button>
+            </div>
           )}
         )}
       </div>) : `Select ${filterType}...`}</div>

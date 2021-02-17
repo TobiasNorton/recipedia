@@ -116,7 +116,7 @@ const Home = () => {
                       <button className="search-button" type="submit">
                         Search
                       </button>
-                      <button className="search-button" onClick={() => setToAdvancedSearch()}>
+                      <button className="advanced-button" onClick={() => setToAdvancedSearch()}>
                         Advanced
                       </button>
                     </form>

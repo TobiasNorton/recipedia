@@ -24,7 +24,7 @@ const AdvancedSearch = ({ onSubmit, backToSimpleSearch, handleKeywordChange, han
       <button className="search-button" type="submit">
         Search
       </button>
-      <button className="search-button" onClick={() => backToSimpleSearch()}>
+      <button className="advanced-button" onClick={() => backToSimpleSearch()}>
         Back to Search
       </button>
       <div className="advanced-options">
