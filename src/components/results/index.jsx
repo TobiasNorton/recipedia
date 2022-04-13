@@ -1,8 +1,10 @@
 import React from 'react';
 import RecipeSnippet from '../recipe-snippet';
+import Pagination from '../pagination';
 
 const SearchResults = ({
   couldNotFindRecipes,
+  currentPage,
   pageNumbers,
   searchQuery,
   setCurrentPage,
@@ -30,15 +32,11 @@ const SearchResults = ({
               );
             })}
           </div>
-          {pageNumbers &&
-            pageNumbers.length > 1 &&
-            pageNumbers.map((number) => {
-              return (
-                <button key={`page-${number}`} onClick={() => setCurrentPage(number)}>
-                  {number}
-                </button>
-              );
-            })}
+          <Pagination
+            pageNumbers={pageNumbers}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
           <button onClick={() => refreshSearch()}>Back to Search</button>
         </div>
       ) : (

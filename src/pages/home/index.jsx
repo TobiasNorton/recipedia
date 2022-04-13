@@ -137,56 +137,14 @@ const Home = () => {
       ) : (
         <SearchResults
           couldNotFindRecipes={couldNotFindRecipes}
-          pageNumber={pageNumbers}
+          currentPage={currentPage}
+          pageNumbers={pageNumbers}
           searchQuery={searchQuery}
           setCurrentPage={setCurrentPage}
           recipes={recipes}
           recipesToDisplay={recipesToDisplay}
           refreshSearch={refreshSearch}
         />
-        // <div className="recipe-results-container">
-        //   {recipes.length > 0 ? (
-        //     <div>
-        //       <h3>{`Showing ${recipes.length} results for "${searchQuery}"`}</h3>
-        //       <button onClick={() => refreshSearch()}>Back to Search</button>
-        //       <div className="recipe-results">
-        //         {recipesToDisplay.map((recipe, index) => {
-        //           const summary = `<p>${recipe.summary}</p>`;
-        //           return (
-        //             <RecipeSnippet
-        //               id={recipe.id}
-        //               key={`recipe-${index}-${recipe.id}`}
-        //               summary={summary}
-        //               title={recipe.title}
-        //               image={recipe.image}
-        //             />
-        //           );
-        //         })}
-        //       </div>
-        //       {pageNumbers.length > 1 &&
-        //         pageNumbers.map((number) => {
-        //           return (
-        //             <button key={`page-${number}`} onClick={() => setCurrentPage(number)}>
-        //               {number}
-        //             </button>
-        //           );
-        //         })}
-        //       <button onClick={() => refreshSearch()}>Back to Search</button>
-        //     </div>
-        //   ) : (
-        //     <div>
-        //       {couldNotFindRecipes ? (
-        //         <div>
-        //           <h3>{`Hmmm, we're not finding anything for "${searchQuery}".`}</h3>
-        //           <p>Showing 0 results.</p>
-        //           <button onClick={() => refreshSearch()}>Back to Search</button>
-        //         </div>
-        //       ) : (
-        //         <div>Loading...</div>
-        //       )}
-        //     </div>
-        //   )}
-        // </div>
       )}
 
       <p>
