@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { INTOLERANCES, CUISINES } from '../../constants';
+import { ALLERGIES, CUISINES } from '../../constants';
 import MultiSelectCheckbox from '../multi-select-checkbox';
 
 const AdvancedSearch = ({
@@ -34,13 +34,13 @@ const AdvancedSearch = ({
         Search
       </button>
       <button className="advanced-button" onClick={() => backToSimpleSearch()}>
-        Back to Search
+        Back to Basic Search
       </button>
       <div className="advanced-options">
-        <div className="options-section-label">Intolerances to omit: </div>
+        <div className="options-section-label">Allergies to omit: </div>
         <MultiSelectCheckbox
           filterType="intolerances"
-          options={INTOLERANCES}
+          options={ALLERGIES}
           handleSelect={handleSelect}
         />
         <div className="options-section-label">Filter by cuisine-type:</div>

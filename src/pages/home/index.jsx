@@ -3,12 +3,11 @@ import axios from 'axios';
 import './style.scss';
 import SearchResults from '../../components/results';
 import AdvancedSearch from '../../components/advanced-search';
-import { API_KEY } from '../../constants';
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState([]);
+  const [selectedCheckboxAllergies, setSelectedCheckboxAllergies] = useState([]);
   const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [couldNotFindRecipes, setCouldNotFindRecipes] = useState(false);
@@ -21,6 +20,7 @@ const Home = () => {
   const indexOfLastRecipe = currentPage * resultsPerPage - 1;
   const indexOfFirstRecipe = indexOfLastRecipe - resultsPerPage + 1;
   const recipesToDisplay = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe + 1);
+  const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
   useEffect(() => {
     const numbers = [];
@@ -45,7 +45,7 @@ const Home = () => {
 
   const handleCheckboxSelect = (filters, filterType) => {
     if (filterType === 'intolerances') {
-      setSelectedCheckboxIntolerances(filters);
+      setSelectedCheckboxAllergies(filters);
     }
     if (filterType === 'cuisines') {
       setSelectedCheckboxCuisines(filters);
@@ -64,14 +64,14 @@ const Home = () => {
     event.preventDefault();
     setIsSearchSubmitted(true);
     const queryString = `&query=${searchQuery}`;
-    const intolerances = selectedCheckboxIntolerances.join(',');
+    const intolerances = selectedCheckboxAllergies.join(',');
     const intolerancesQueryString = `&intolerances=${intolerances}`;
     const cuisines = selectedCheckboxCuisines.join(',');
     const cuisinesQueryString = `&cuisine=${cuisines}`;
 
     setSearchQuery(searchQuery);
 
-    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=200`;
+    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=200`;
 
     if (searchQuery) {
       recipesSearchUrl = `${recipesSearchUrl}${queryString}`;
@@ -105,6 +105,7 @@ const Home = () => {
     <div className="home">
       {!isSearchSubmitted ? (
         <div className="search-form-container">
+          <h1>Welcome to Recipedia</h1>
           <h3>What are you hungry for?</h3>
           {!isAdvancedSearch ? (
             <form onSubmit={onSubmit}>

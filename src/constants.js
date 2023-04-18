@@ -1,48 +1,4 @@
-// export const INTOLERANCES = [
-//   'Dairy',
-//   'Egg',
-//   'Gluten',
-//   'Grain',
-//   'Peanut',
-//   'Seafood',
-//   'Sesame',
-//   'Shellfish',
-//   'Soy',
-//   'Sulfite',
-//   'Tree Nut',
-//   'Wheat']
-
-
-// export const CUISINES = [
-//   'African',
-//   'American',
-//   'British',
-//   'Cajun',
-//   'Caribbean',
-//   'Chinese',
-//   'Eastern European',
-//   'European',
-//   'French',
-//   'German',
-//   'Greek',
-//   'Indian',
-//   'Irish',
-//   'Italian',
-//   'Japanese',
-//   'Jewish',
-//   'Korean',
-//   'Latin American',
-//   'Mediterranean',
-//   'Mexican',
-//   'Middle Eastern',
-//   'Nordic',
-//   'Southern',
-//   'Spanish',
-//   'Thai',
-//   'Vietnamese',
-// ]
-
-export const INTOLERANCES = [
+export const ALLERGIES = [
   { value: 'dairy', label: 'Dairy' },
   { value: 'egg', label: 'Egg' },
   { value: 'gluten', label: 'Gluten' },
@@ -54,8 +10,8 @@ export const INTOLERANCES = [
   { value: 'soy', label: 'Soy' },
   { value: 'sulfate', label: 'Sulfite' },
   { value: 'tree nut', label: 'Tree Nut' },
-  { value: 'wheat', label: 'Wheat' }]
-
+  { value: 'wheat', label: 'Wheat' },
+];
 
 export const CUISINES = [
   { value: 'african', label: 'African' },
@@ -84,6 +40,4 @@ export const CUISINES = [
   { value: 'spanish', label: 'Spanish' },
   { value: 'thai', label: 'Thai' },
   { value: 'vietnamese', label: 'Vietnamese' },
-]
-
-export const API_KEY = '7115e309409d4387a6369108cd7185fd'
+];
