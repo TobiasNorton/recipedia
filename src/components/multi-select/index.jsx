@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Field } from 'formik'
-import './style.scss'
+import React, { useEffect, useState } from 'react';
+import { Field } from 'formik';
+import './style.scss';
 
-const MultiSelect = ({filterType, options, handleSelect}) => {
-  const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-  const [selectedOptions, setSelectedOptions] = useState([])
+// THIS COMPONENT IS NOT BEING USED
+const MultiSelect = ({ filterType, options, handleSelect }) => {
+  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
-    console.log("selectedOptions have changed [USE_EFFECT]", selectedOptions)
-    handleSelect(selectedOptions, filterType)
-  }, [selectedOptions])
+    console.log('selectedOptions have changed [USE_EFFECT]', selectedOptions);
+    handleSelect(selectedOptions, filterType);
+  }, [selectedOptions]);
 
   // const addOption = (option) => {
   //   console.log('CALLED', option)
@@ -41,30 +42,39 @@ const MultiSelect = ({filterType, options, handleSelect}) => {
   // }
 
   const onChange = (event) => {
-    console.log('onchange multiselect BARS')
+    console.log('onchange multiselect BARS');
     if (!selectedOptions.includes(event.target.name)) {
-      setSelectedOptions([...selectedOptions, event.target.name])
+      setSelectedOptions([...selectedOptions, event.target.name]);
     } else {
-      const updatedSelectedOptions = selectedOptions.filter(option => option !== event.target.name)
-      setSelectedOptions(updatedSelectedOptions)
+      const updatedSelectedOptions = selectedOptions.filter(
+        (option) => option !== event.target.name
+      );
+      setSelectedOptions(updatedSelectedOptions);
     }
-  }
+  };
 
   return (
     <div className="multiselect">
-      <div className="multiselect-field" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>{selectedOptions.length > 0 ? (
-        <div className="filters-container">{selectedOptions.map((option, index) => {
-          return (
-            <div id={option} key={`input-${option}-${index}`} className="selected-option">{option}</div>
-            // <input id={option.label} key={`input-${option.value}-${index}`} name={option.label} type="text" className="selected-option" value={option.value} size={option.label && option.label.length + 1}></input>
-          )
-        }
+      <div className="multiselect-field" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
+        {selectedOptions.length > 0 ? (
+          <div className="filters-container">
+            {selectedOptions.map((option, index) => {
+              return (
+                <div id={option} key={`input-${option}-${index}`} className="selected-option">
+                  {option}
+                </div>
+                // <input id={option.label} key={`input-${option.value}-${index}`} name={option.label} type="text" className="selected-option" value={option.value} size={option.label && option.label.length + 1}></input>
+              );
+            })}
+          </div>
+        ) : (
+          `Select ${filterType}...Part Two`
         )}
-      </div>) : `Select ${filterType}...Part Two`}</div>
+      </div>
       {/* {dropdownIsOpen &&  */}
-      
-        <div className={`multiselect-dropdown ${!dropdownIsOpen ? 'hidden' : ''}`}>
-          {/* <ul>{options.map((option, index) => {
+
+      <div className={`multiselect-dropdown ${!dropdownIsOpen ? 'hidden' : ''}`}>
+        {/* <ul>{options.map((option, index) => {
             return (
               <li key={`${option.value}-${index}`} className="multiselect-li" 
               // onClick={() => addOption(option)}
@@ -74,18 +84,24 @@ const MultiSelect = ({filterType, options, handleSelect}) => {
             )
           })}
           </ul> */}
-          {options.map((option, index) => {
-            return (
-              <div key={`${option.value}-${index}`} id={option.value} className="multiselect-filter">
-                <input id={option.value} name={option.value} type="checkbox" onChange={onChange}></input>
-                <label htmlFor={option.value}>{option.label}</label>
-              </div>  
-            )})}
-        </div>
-      
+        {options.map((option, index) => {
+          return (
+            <div key={`${option.value}-${index}`} id={option.value} className="multiselect-filter">
+              <input
+                id={option.value}
+                name={option.value}
+                type="checkbox"
+                onChange={onChange}
+              ></input>
+              <label htmlFor={option.value}>{option.label}</label>
+            </div>
+          );
+        })}
+      </div>
+
       {/* } */}
     </div>
   );
-}
+};
 
 export default MultiSelect;

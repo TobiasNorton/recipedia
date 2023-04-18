@@ -4,6 +4,7 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import './style.scss';
 import { ALLERGIES, CUISINES } from '../../constants';
 
+// THIS COMPONENT IS NOT BEING USED
 const AdvancedSearchFormik = ({ onSubmit, backToSimpleSearch }) => {
   const [selectedIntolerances, setSelectedIntolerances] = useState([]);
   const [selectedCuisines, setSelectedCuisines] = useState([]);

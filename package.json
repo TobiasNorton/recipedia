@@ -6,6 +6,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
     "dotenv": "^8.6.0",
@@ -17,7 +21,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-select": "^3.1.0",
-    "sass": "^1.51.0"
+    "sass": "^1.51.0",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",

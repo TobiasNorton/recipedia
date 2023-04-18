@@ -10,7 +10,7 @@ const Recipe = (props) => {
     recipe.analyzedInstructions &&
     recipe.analyzedInstructions[0] &&
     recipe.analyzedInstructions[0].steps;
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const {
     match: {
       params: { recipeId },
