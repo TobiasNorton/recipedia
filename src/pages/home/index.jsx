@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.scss';
-import RecipeSnippet from '../../components/recipe-snippet';
 import SearchResults from '../../components/results';
 import AdvancedSearch from '../../components/advanced-search';
 import { API_KEY } from '../../constants';
@@ -72,8 +71,7 @@ const Home = () => {
 
     setSearchQuery(searchQuery);
 
-    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`;
-    console.log('searchQuery: ', searchQuery);
+    let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=200`;
 
     if (searchQuery) {
       recipesSearchUrl = `${recipesSearchUrl}${queryString}`;
@@ -85,9 +83,7 @@ const Home = () => {
       recipesSearchUrl = `${recipesSearchUrl}${cuisinesQueryString}`;
     }
 
-    console.log('recipesSearchUrl', recipesSearchUrl);
     axios.get(recipesSearchUrl).then((response) => {
-      console.log('response.data', response && response.data && response.data);
       setRecipes(response.data && response.data.results);
       if (response.data && response.data.totalResults === 0) {
         setCouldNotFindRecipes(true);
@@ -109,7 +105,7 @@ const Home = () => {
     <div className="home">
       {!isSearchSubmitted ? (
         <div className="search-form-container">
-          <h3>What's cookin'?</h3>
+          <h3>What are you hungry for?</h3>
           {!isAdvancedSearch ? (
             <form onSubmit={onSubmit}>
               <input
