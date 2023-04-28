@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { type FC, SyntheticEvent, ChangeEvent } from 'react';
 import './style.scss';
-import { ALLERGIES, CUISINES } from '../../constants';
+import { INTOLERANCES, CUISINES } from '../../constants';
 import MultiSelectCheckbox from '../multi-select-checkbox';
 
-const AdvancedSearch = ({
-  onSubmit,
-  backToSimpleSearch,
-  handleKeywordChange,
-  handleCheckboxSelect,
-}) => {
-  const callOnSubmit = (event) => {
+interface AdvancedSearchProps {
+  onSubmit: Function;
+  backToSimpleSearch: Function;
+  handleKeywordChange: Function;
+  handleCheckboxSelect: Function;
+}
+
+const AdvancedSearch = (props: AdvancedSearchProps) => {
+  const { onSubmit, backToSimpleSearch, handleKeywordChange, handleCheckboxSelect } = props;
+
+  const callOnSubmit = (event: SyntheticEvent) => {
     onSubmit(event);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent) => {
     handleKeywordChange(event);
   };
 
-  const handleSelect = (selectedOptions, filterType) => {
+  const handleSelect = (selectedOptions: string[], filterType: string) => {
     handleCheckboxSelect(selectedOptions, filterType);
   };
 
@@ -37,10 +41,10 @@ const AdvancedSearch = ({
         Back to Basic Search
       </button>
       <div className="advanced-options">
-        <div className="options-section-label">Allergies to omit: </div>
+        <div className="options-section-label">Intolerances to omit: </div>
         <MultiSelectCheckbox
           filterType="intolerances"
-          options={ALLERGIES}
+          options={INTOLERANCES}
           handleSelect={handleSelect}
         />
         <div className="options-section-label">Filter by cuisine-type:</div>

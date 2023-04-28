@@ -2,16 +2,28 @@ import React from 'react';
 import RecipeSnippet from '../recipe-snippet';
 import Pagination from '../pagination';
 
-const SearchResults = ({
-  couldNotFindRecipes,
-  currentPage,
-  pageNumbers,
-  searchQuery,
-  setCurrentPage,
-  recipes,
-  recipesToDisplay,
-  refreshSearch,
-}) => {
+interface SearchResultsProps {
+  couldNotFindRecipes: boolean;
+  currentPage: number;
+  pageNumbers: number[];
+  searchQuery: string;
+  setCurrentPage: Function;
+  recipes: any[];
+  recipesToDisplay: any[];
+  refreshSearch: Function;
+}
+
+const SearchResults = (props: SearchResultsProps) => {
+  const {
+    couldNotFindRecipes,
+    currentPage,
+    pageNumbers,
+    searchQuery,
+    setCurrentPage,
+    recipes,
+    recipesToDisplay,
+    refreshSearch,
+  } = props;
   return (
     <div className="recipe-results-container">
       {recipes.length > 0 ? (

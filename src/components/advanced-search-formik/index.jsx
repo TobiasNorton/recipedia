@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Multiselect } from 'multiselect-react-dropdown';
 import './style.scss';
-import { ALLERGIES, CUISINES } from '../../constants';
+import { INTOLERANCES, CUISINES } from '../../constants';
 
 // THIS COMPONENT IS NOT BEING USED
 const AdvancedSearchFormik = ({ onSubmit, backToSimpleSearch }) => {
@@ -30,14 +30,14 @@ const AdvancedSearchFormik = ({ onSubmit, backToSimpleSearch }) => {
             <div className="advanced-options">
               <div className="options-section-label">Intolerances to omit: </div>
               {/* <div className="intolerances">
-                {ALLERGIES.map((intolerance, index) => {
+                {INTOLERANCES.map((intolerance, index) => {
                   return (
                     <button key={`${intolerance}-${index}`} type="button" className="option-button" onClick={() => values.intolerances.push(intolerance.value)}>{intolerance.label}</button>
                   )
                 })}
               </div> */}
               <Multiselect
-                options={ALLERGIES} // Options to display in the dropdown
+                options={INTOLERANCES} // Options to display in the dropdown
                 selectedValues={selectedIntolerances} // Preselected value to persist in dropdown
                 onSelect={() => (values.intolerances = selectedIntolerances)} // Function will trigger on select event
                 // onRemove={} // Function will trigger on remove event

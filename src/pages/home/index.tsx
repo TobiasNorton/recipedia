@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.scss';
 import SearchResults from '../../components/results';
@@ -7,11 +7,11 @@ import AdvancedSearch from '../../components/advanced-search';
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCheckboxAllergies, setSelectedCheckboxAllergies] = useState([]);
-  const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState([]);
+  const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState<string[]>([]);
+  const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState<string[]>([]);
   const [recipes, setRecipes] = useState([]);
   const [couldNotFindRecipes, setCouldNotFindRecipes] = useState(false);
-  const [pageNumbers, setPageNumbers] = useState([]);
+  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
 
@@ -38,33 +38,35 @@ const Home = () => {
     setIsSearchSubmitted(false);
   };
 
-  const handleKeywordChange = (event) => {
+  const handleKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     setSearchQuery(target.value);
   };
 
-  const handleCheckboxSelect = (filters, filterType) => {
+  const handleCheckboxSelect = (filters: string[], filterType: string) => {
+    console.log('filters', filters);
     if (filterType === 'intolerances') {
-      setSelectedCheckboxAllergies(filters);
+      setSelectedCheckboxIntolerances(filters);
     }
     if (filterType === 'cuisines') {
       setSelectedCheckboxCuisines(filters);
     }
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     try {
       search(event);
     } catch (error) {
+      // TODO: Add toast error, or UI indication of some kind
       console.log(error);
     }
   };
 
-  const search = (event) => {
+  const search = (event: SyntheticEvent) => {
     event.preventDefault();
     setIsSearchSubmitted(true);
     const queryString = `&query=${searchQuery}`;
-    const intolerances = selectedCheckboxAllergies.join(',');
+    const intolerances = selectedCheckboxIntolerances.join(',');
     const intolerancesQueryString = `&intolerances=${intolerances}`;
     const cuisines = selectedCheckboxCuisines.join(',');
     const cuisinesQueryString = `&cuisine=${cuisines}`;

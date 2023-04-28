@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 import './style.scss';
 
-const Recipe = (props) => {
-  const [recipe, setRecipe] = useState();
+type RecipePageProps = RouteComponentProps;
+
+const Recipe = (props: RecipePageProps) => {
+  console.log('props', props);
+  const [recipe, setRecipe] = useState<Record<string, any>>({});
   const ingredients = recipe && recipe.extendedIngredients;
-  const instructions =
+  const steps =
     recipe &&
     recipe.analyzedInstructions &&
     recipe.analyzedInstructions[0] &&
@@ -16,11 +20,12 @@ const Recipe = (props) => {
       params: { recipeId },
     },
   } = props;
+
   useEffect(() => {
     axios
       .get(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`)
       .then((response) => {
-        console.log(response.data);
+        console.log('response.data', response.data);
         setRecipe(response.data);
       });
   }, []);
@@ -48,11 +53,11 @@ const Recipe = (props) => {
 
       <h2>Preparation:</h2>
       <div>
-        {instructions &&
-          instructions.map((instruction, index) => {
+        {steps &&
+          steps.map((step: Record<string, any>, index: number) => {
             return (
-              <p key={`instruction-${index}`} className="step">
-                <span>{instruction.number}.</span> {instruction.step}
+              <p key={`step-${index}`} className="step">
+                <span>{step.number}.</span> {step.step}
               </p>
             );
           })}

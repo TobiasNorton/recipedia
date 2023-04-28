@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.scss';
 
-const RecipeSnippet = ({ id, title, image, summary }) => {
+interface RecipeSnippetProps {
+  id: number;
+  title: string;
+  image: string;
+  summary: string;
+}
+
+const RecipeSnippet = (props: RecipeSnippetProps) => {
+  const { id, title, image, summary } = props;
   const abbreviatedSummary = summary.slice(0, 330);
 
   return (

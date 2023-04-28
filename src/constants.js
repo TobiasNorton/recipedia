@@ -1,4 +1,4 @@
-export const ALLERGIES = [
+export const INTOLERANCES = [
   { value: 'dairy', label: 'Dairy' },
   { value: 'egg', label: 'Egg' },
   { value: 'gluten', label: 'Gluten' },
