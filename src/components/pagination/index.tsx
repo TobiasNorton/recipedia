@@ -1,7 +1,15 @@
 import React from 'react';
 import './style.scss';
 
-const Pagination = ({ currentPage, pageNumbers, setCurrentPage }) => {
+interface PaginationProps {
+  currentPage: number;
+  pageNumbers: number[];
+  setCurrentPage: Function;
+}
+
+const Pagination = (props: PaginationProps) => {
+  const { currentPage, pageNumbers, setCurrentPage } = props;
+  console.log('Pagination props', props);
   let numbersToDisplay;
   const firstPages = pageNumbers.slice(0, 3);
   const lastPages = pageNumbers.slice(pageNumbers.length - 3);

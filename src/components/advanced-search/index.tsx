@@ -41,14 +41,18 @@ const AdvancedSearch = (props: AdvancedSearchProps) => {
         Back to Basic Search
       </button>
       <div className="advanced-options">
-        <div className="options-section-label">Intolerances to omit: </div>
         <MultiSelectCheckbox
           filterType="intolerances"
           options={INTOLERANCES}
           handleSelect={handleSelect}
+          label="Intolerances to omit:"
         />
-        <div className="options-section-label">Filter by cuisine-type:</div>
-        <MultiSelectCheckbox filterType="cuisines" options={CUISINES} handleSelect={handleSelect} />
+        <MultiSelectCheckbox
+          filterType="cuisines"
+          options={CUISINES}
+          handleSelect={handleSelect}
+          label="Filter by cuisine-type:"
+        />
       </div>
     </form>
   );

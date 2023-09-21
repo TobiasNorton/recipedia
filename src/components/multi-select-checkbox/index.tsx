@@ -8,10 +8,11 @@ interface MultiSelectCheckboxProps {
     label: string;
   }[];
   handleSelect: Function;
+  label: string;
 }
 
 const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
-  const { filterType, options, handleSelect } = props;
+  const { filterType, options, handleSelect, label } = props;
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -33,6 +34,7 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
 
   return (
     <div className="multiselect-checkbox">
+      <div className="multiselect-label">{label}</div>
       <div className="multiselect-field" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
         {selectedOptions.length > 0 ? (
           <div className="filters-container">

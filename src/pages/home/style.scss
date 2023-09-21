@@ -1,14 +1,42 @@
 .home {
   .search-form-container {
-    max-width: 700px;
+    // max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+      url('../../assets/RecipediaHeroImage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 64px);
+
+    .main-header {
+      font-size: 64px;
+      color: white;
+      margin: 0;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .sub-header {
+      font-size: 24px;
+      color: white;
+      margin-top: 0;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-label {
+      color: white;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
 
     .text-field {
       font-family: 'Poppins', sans-serif;
       min-width: 240px;
-      padding: 5px 10px;
+      padding: 10px 16px 9px 16px;
       font-size: 16px;
-      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
     }
 
     .search-button {
@@ -19,20 +47,21 @@
       padding: 8px 50px;
       border: none;
       border-radius: 5px;
-      margin: 10px 10px 10px 16px;
+      margin: 0px 0px 0px 28px;
     }
 
     .advanced-button {
       font-family: 'Poppins', sans-serif;
       background: none;
-      color: grey;
+      color: white;
       font-size: 14px;
       padding: 6px 8px;
       line-height: 14px;
       border: none;
       border-radius: 5px;
-      margin: 10px 10px 10px 16px;
+      margin: 10px 0px 10px 16px;
       text-decoration: underline;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
     .search-button,
