@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './style.scss';
 import AdvancedSearch from '../../components/advanced-search';
-import { setKeyword } from '../../redux/slices/search-form';
 import { setSearchResults } from '../../redux/slices/search-results';
 
 const Home = () => {
