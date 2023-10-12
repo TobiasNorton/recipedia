@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -9,8 +9,6 @@ import { setSearchResults } from '../../redux/slices/search-results';
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState<string[]>([]);
-  const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState<string[]>([]);
   const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -19,15 +17,6 @@ const Home = () => {
     const target = event.target;
     setSearchQuery(target.value);
     // dispatch(setKeyword(target.value));
-  };
-
-  const handleCheckboxSelect = (filters: string[], filterType: string) => {
-    if (filterType === 'intolerances') {
-      setSelectedCheckboxIntolerances(filters);
-    }
-    if (filterType === 'cuisines') {
-      setSelectedCheckboxCuisines(filters);
-    }
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -39,23 +28,11 @@ const Home = () => {
     try {
       // setIsSearchSubmitted(true);
       const queryString = `&query=${searchQuery}`;
-      const intolerances = selectedCheckboxIntolerances.join(',');
-      const intolerancesQueryString = `&intolerances=${intolerances}`;
-      const cuisines = selectedCheckboxCuisines.join(',');
-      const cuisinesQueryString = `&cuisine=${cuisines}`;
-
       setSearchQuery(searchQuery);
-
       let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=200`;
 
       if (searchQuery) {
         recipesSearchUrl = `${recipesSearchUrl}${queryString}`;
-      }
-      if (intolerances && intolerances.length > 0) {
-        recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`;
-      }
-      if (cuisines && cuisines.length > 0) {
-        recipesSearchUrl = `${recipesSearchUrl}${cuisinesQueryString}`;
       }
 
       const fetchRecipes = async () => {
@@ -95,17 +72,10 @@ const Home = () => {
       <div className="overlay">
         <div className="search-form-container">
           <h1 className="main-header">Welcome to Recipedia</h1>
-          <h3 className="sub-header">
-            When you just need a recipe without the author's life story
-          </h3>
+          <h3 className="sub-header">Recipes without the authors' life stories</h3>
           <h3 className="search-label">What's on the menu?</h3>
           {isAdvancedSearch ? (
-            <AdvancedSearch
-              onSubmit={onSubmit}
-              backToSimpleSearch={backToSimpleSearch}
-              handleKeywordChange={handleKeywordChange}
-              handleCheckboxSelect={handleCheckboxSelect}
-            />
+            <AdvancedSearch backToSimpleSearch={backToSimpleSearch} />
           ) : (
             <form onSubmit={onSubmit}>
               <input

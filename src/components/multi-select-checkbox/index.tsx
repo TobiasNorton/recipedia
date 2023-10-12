@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import './style.scss';
 
 interface MultiSelectCheckboxProps {
@@ -32,6 +32,13 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
     handleSelect(selectedOptions, filterType);
   };
 
+  const removeOption = (event: MouseEvent<HTMLButtonElement>, option: string) => {
+    event?.preventDefault();
+    console.log('option', option);
+    const updatedSelectedOptions = selectedOptions.filter((opt) => option !== opt);
+    setSelectedOptions(updatedSelectedOptions);
+  };
+
   return (
     <div className="multiselect-checkbox">
       <div className="multiselect-label">{label}</div>
@@ -39,12 +46,13 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
         {selectedOptions.length > 0 ? (
           <div className="filters-container">
             {selectedOptions.map((option, index) => {
+              console.log('option:', option);
               return (
                 <div className="selected-option">
                   <div id={option} key={`input-${option}-${index}`}>
                     {option}
                   </div>
-                  <button className="close">
+                  <button className="close" onClick={(event) => removeOption(event, option)}>
                     <i className="fas fa-times-circle"></i>
                   </button>
                 </div>
@@ -66,6 +74,7 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
                   name={option.value}
                   type="checkbox"
                   onChange={onChange}
+                  checked={selectedOptions.includes(option.value)}
                 ></input>
                 <label htmlFor={option.value}>{option.label}</label>
               </div>
