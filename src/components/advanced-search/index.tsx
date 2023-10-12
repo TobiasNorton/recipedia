@@ -8,11 +8,11 @@ import { setSearchResults } from '../../redux/slices/search-results';
 import './style.scss';
 
 interface AdvancedSearchProps {
-  backToSimpleSearch: Function;
+  backToBasicSearch: Function;
 }
 
 const AdvancedSearch = (props: AdvancedSearchProps) => {
-  const { backToSimpleSearch } = props;
+  const { backToBasicSearch } = props;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState<string[]>([]);
@@ -97,7 +97,7 @@ const AdvancedSearch = (props: AdvancedSearchProps) => {
       <button className="search-button" type="submit">
         Search
       </button>
-      <button className="advanced-button" onClick={() => backToSimpleSearch()}>
+      <button className="advanced-button" onClick={() => backToBasicSearch()}>
         Back to Basic Search
       </button>
       <div className="advanced-options">
