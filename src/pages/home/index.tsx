@@ -61,7 +61,7 @@ const Home = () => {
     // setRecipes([]);
   };
 
-  const backToSimpleSearch = () => {
+  const backToBasicSearch = () => {
     setIsAdvancedSearch(false);
     // setRecipes([]);
   };
@@ -75,7 +75,7 @@ const Home = () => {
           <h3 className="sub-header">Recipes without the authors' life stories</h3>
           <h3 className="search-label">What's on the menu?</h3>
           {isAdvancedSearch ? (
-            <AdvancedSearch backToSimpleSearch={backToSimpleSearch} />
+            <AdvancedSearch backToBasicSearch={backToBasicSearch} />
           ) : (
             <form onSubmit={onSubmit}>
               <input

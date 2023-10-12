@@ -2,5 +2,18 @@
   margin: auto;
   display: flex;
   justify-content: flex-start;
+  font-family: 'Poppins', sans-serif;
+  background-color: black;
   padding: 20px;
+
+  .logo {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+
+    .fa-pepper-hot {
+      padding-left: 5px;
+    }
+  }
 }
