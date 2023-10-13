@@ -1,21 +1,23 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './style.scss';
+import { type RootState } from '../../redux/root-reducer';
 import AdvancedSearch from '../../components/advanced-search';
 import { setSearchResults } from '../../redux/slices/search-results';
+import { setSearchQuery } from '../../redux/slices/search-query';
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = useSelector((state: RootState) => state.searchQuery);
   const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const history = useHistory();
   const dispatch = useDispatch();
 
   const handleKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
-    setSearchQuery(target.value);
+    dispatch(setSearchQuery(target.value));
     // dispatch(setKeyword(target.value));
   };
 
@@ -28,7 +30,6 @@ const Home = () => {
     try {
       // setIsSearchSubmitted(true);
       const queryString = `&query=${searchQuery}`;
-      setSearchQuery(searchQuery);
       let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=200`;
 
       if (searchQuery) {

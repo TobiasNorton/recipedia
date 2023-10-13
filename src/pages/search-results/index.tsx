@@ -16,6 +16,7 @@ const SearchResults = () => {
 
   const { search } = useLocation();
   const recipes = useSelector((state: RootState) => state.searchResults);
+  const searchQuery = useSelector((state: RootState) => state.searchQuery);
   // const { query } = queryString.parse(search);
 
   const resultsPerPage = 10;
@@ -44,7 +45,7 @@ const SearchResults = () => {
     <div className="recipe-results-container">
       {recipes.length > 0 ? (
         <div>
-          {/* <h3>{`Showing ${recipes.length} results for "${searchQuery}"`}</h3> */}
+          <h3>{`Showing ${recipes.length} results for "${searchQuery}"`}</h3>
           {/* <button onClick={() => refreshSearch()}>Back to Search</button> */}
           <div className="recipe-results">
             {recipes.map(
