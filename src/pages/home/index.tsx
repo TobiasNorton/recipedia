@@ -96,12 +96,6 @@ const Home = () => {
         </div>
       </div>
       {/* )} */}
-      <p>
-        I created this using the{' '}
-        <a href="https://spoonacular.com/food-api" target="_blank" rel="noreferrer">
-          Spoonacular API
-        </a>
-      </p>
     </div>
   );
 };
