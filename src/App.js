@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Recipe from './pages/recipe';
 import NavigationBar from './components/navigation-bar';
 import SearchResults from './pages/search-results';
+import Footer from './components/footer';
 
 function App() {
   // See the browser's built-in URLSearchParams API.
@@ -19,6 +20,7 @@ function App() {
           <Route path="/search-results" component={SearchResults} />
           <Redirect to="/" />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

@@ -1,4 +1,4 @@
-Using the spoonacular API to search for recipes by ingredient(s), cuisine type and filter intolerances and allergies.
+React app with Redux Toolkit. This uses the Spoonacular API to search for recipes by ingredient(s), cuisine type and filter intolerances and allergies.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
