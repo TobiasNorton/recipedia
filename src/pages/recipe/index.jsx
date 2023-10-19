@@ -32,13 +32,13 @@ const Recipe = (props) => {
 
   return (
     <div className="recipe">
-      <h1>{recipe && recipe.title}</h1>
-      {recipe && recipe.creditsText && (
+      <h1>{recipe?.title}</h1>
+      {recipe?.creditsText && (
         <p className="byline">
-          Recipe by <a href={recipe.sourceUrl}>{recipe.creditsText}</a>
+          Recipe by <a href={recipe?.sourceUrl}>{recipe?.creditsText}</a>
         </p>
       )}
-      <img className="main-image" src={recipe && recipe.image} />
+      <img className="main-image" src={recipe?.image} alt={recipe?.title} />
       <h2>Ingredients:</h2>
       <div>
         {ingredients &&

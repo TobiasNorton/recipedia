@@ -6,6 +6,7 @@ import './style.scss';
 import { type RootState } from '../../redux/root-reducer';
 import AdvancedSearch from '../../components/advanced-search';
 import { setSearchResults } from '../../redux/slices/search-results';
+import { setTotalResults } from '../../redux/slices/total-results';
 import { setSearchQuery } from '../../redux/slices/search-query';
 
 const Home = () => {
@@ -43,9 +44,9 @@ const Home = () => {
             // TODO: Handle couldNotFindRecipes
             console.log('COULD NOT FIND RECIPES');
           } else {
-            console.log('response.data.results', response.data.results);
-            // TODO: Check up on this
+            console.log('response.data', response.data);
             dispatch(setSearchResults(response.data.results));
+            dispatch(setTotalResults(response.data.totalResults));
             history.push('/search-results');
           }
         });

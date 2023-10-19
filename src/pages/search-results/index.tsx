@@ -3,7 +3,6 @@ import RecipeSnippet from '../../components/recipe-snippet';
 import Pagination from '../../components/pagination';
 import { useLocation } from 'react-router-dom';
 // import queryString from 'query-string';
-import { searchResultsSelector } from '../../redux/slices/search-results';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../redux/root-reducer';
 
@@ -16,6 +15,7 @@ const SearchResults = () => {
 
   const { search } = useLocation();
   const recipes = useSelector((state: RootState) => state.searchResults);
+  const totalResults = useSelector((state: RootState) => state.totalResults);
   const searchQuery = useSelector((state: RootState) => state.searchQuery);
   // const { query } = queryString.parse(search);
 
@@ -57,7 +57,7 @@ const SearchResults = () => {
                 return (
                   <RecipeSnippet
                     id={recipe.id}
-                    key={`recipe-${index}-${recipe.id}`}
+                    key={index}
                     title={recipe.title}
                     image={recipe.image}
                     summary={summary}
@@ -75,7 +75,7 @@ const SearchResults = () => {
         </div>
       ) : (
         <div>
-          {couldNotFindRecipes ? (
+          {totalResults === 0 ? (
             <div>
               {/* <h3>{`Hmmm, we're not finding anything for "${searchQuery}".`}</h3> */}
               <p>Showing 0 results.</p>

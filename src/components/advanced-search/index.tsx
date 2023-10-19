@@ -56,7 +56,7 @@ const AdvancedSearch = (props: AdvancedSearchProps) => {
             // TODO: Handle couldNotFindRecipes
             console.log('COULD NOT FIND RECIPES');
           } else {
-            console.log('response.data.results', response.data.results);
+            console.log('response.data', response.data);
             // TODO: Check up on this
             dispatch(setSearchResults(response.data.results));
             history.push('/search-results');
