@@ -29,7 +29,6 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
       );
       setSelectedOptions(updatedSelectedOptions);
     }
-    handleSelect(selectedOptions, filterType);
   };
 
   const removeOption = (event: MouseEvent<HTMLButtonElement>, option: string) => {
@@ -48,10 +47,8 @@ const MultiSelectCheckbox = (props: MultiSelectCheckboxProps) => {
             {selectedOptions.map((option, index) => {
               console.log('option:', option);
               return (
-                <div className="selected-option">
-                  <div id={option} key={`input-${option}-${index}`}>
-                    {option}
-                  </div>
+                <div key={index} className="selected-option">
+                  <div id={option}>{option}</div>
                   <button className="close" onClick={(event) => removeOption(event, option)}>
                     <i className="fas fa-times-circle"></i>
                   </button>

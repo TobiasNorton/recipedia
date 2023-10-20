@@ -1,10 +1,12 @@
 import React, { type FC, SyntheticEvent, ChangeEvent, FormEvent, useState } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import MultiSelectCheckbox from '../multi-select-checkbox';
 import { INTOLERANCES, CUISINES } from '../../constants';
 import { setSearchResults } from '../../redux/slices/search-results';
+import { setSearchQuery, setIntolerances, setCuisines } from '../../redux/slices/search-form';
+import { type RootState } from '../../redux/root-reducer';
 import './style.scss';
 
 interface AdvancedSearchProps {
@@ -14,9 +16,9 @@ interface AdvancedSearchProps {
 const AdvancedSearch = (props: AdvancedSearchProps) => {
   const { backToBasicSearch } = props;
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCheckboxIntolerances, setSelectedCheckboxIntolerances] = useState<string[]>([]);
-  const [selectedCheckboxCuisines, setSelectedCheckboxCuisines] = useState<string[]>([]);
+  const searchQuery = useSelector((state: RootState) => state.searchForm.searchQuery);
+  const selectedIntolerances = useSelector((state: RootState) => state.searchForm.intolerances);
+  const selectedCuisines = useSelector((state: RootState) => state.searchForm.cuisines);
   const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,28 +26,28 @@ const AdvancedSearch = (props: AdvancedSearchProps) => {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // let searchPath = `/search?query=${searchQuery}`
-    // const intolerancesParam = selectedCheckboxIntolerances.length > 0 ? ``
+    // const intolerancesParam = selectedIntolerances.length > 0 ? ``
     // history.push(`/search?query=${searchQuery}`);
     // To abstract this to its own hook, pass in searchQuery, selectedIntolerances, selectedCuisines
     try {
       // setIsSearchSubmitted(true);
       const queryString = `&query=${searchQuery}`;
-      const intolerances = selectedCheckboxIntolerances.join(',');
-      const intolerancesQueryString = `&intolerances=${intolerances}`;
-      const cuisines = selectedCheckboxCuisines.join(',');
-      const cuisinesQueryString = `&cuisine=${cuisines}`;
+      const intolerancesString = selectedIntolerances.join(',');
+      const intolerancesQueryString = `&intolerances=${intolerancesString}`;
+      const cuisinesString = selectedCuisines.join(',');
+      const cuisinesQueryString = `&cuisine=${cuisinesString}`;
 
-      setSearchQuery(searchQuery);
+      dispatch(setSearchQuery(searchQuery));
 
       let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=200`;
 
       if (searchQuery) {
         recipesSearchUrl = `${recipesSearchUrl}${queryString}`;
       }
-      if (intolerances && intolerances.length > 0) {
+      if (intolerancesString?.length > 0) {
         recipesSearchUrl = `${recipesSearchUrl}${intolerancesQueryString}`;
       }
-      if (cuisines && cuisines.length > 0) {
+      if (cuisinesString?.length > 0) {
         recipesSearchUrl = `${recipesSearchUrl}${cuisinesQueryString}`;
       }
 
@@ -72,16 +74,16 @@ const AdvancedSearch = (props: AdvancedSearchProps) => {
 
   const handleKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
-    setSearchQuery(target.value);
+    dispatch(setSearchQuery(target.value));
     // dispatch(setKeyword(target.value));
   };
 
   const handleCheckboxSelect = (filters: string[], filterType: string) => {
     if (filterType === 'intolerances') {
-      setSelectedCheckboxIntolerances(filters);
+      dispatch(setIntolerances(filters));
     }
     if (filterType === 'cuisines') {
-      setSelectedCheckboxCuisines(filters);
+      dispatch(setCuisines(filters));
     }
   };
 

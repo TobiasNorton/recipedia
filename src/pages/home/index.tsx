@@ -7,11 +7,11 @@ import { type RootState } from '../../redux/root-reducer';
 import AdvancedSearch from '../../components/advanced-search';
 import { setSearchResults } from '../../redux/slices/search-results';
 import { setTotalResults } from '../../redux/slices/total-results';
-import { setSearchQuery } from '../../redux/slices/search-query';
+import { resetForm, setSearchQuery } from '../../redux/slices/search-form';
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-  const searchQuery = useSelector((state: RootState) => state.searchQuery);
+  const searchQuery = useSelector((state: RootState) => state.searchForm.searchQuery);
   const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -60,12 +60,12 @@ const Home = () => {
 
   const setToAdvancedSearch = () => {
     setIsAdvancedSearch(true);
-    // setRecipes([]);
+    dispatch(resetForm());
   };
 
   const backToBasicSearch = () => {
     setIsAdvancedSearch(false);
-    // setRecipes([]);
+    dispatch(resetForm());
   };
 
   return (
