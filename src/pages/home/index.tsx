@@ -1,61 +1,31 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import './style.scss';
 import { type RootState } from '../../redux/root-reducer';
 import AdvancedSearch from '../../components/advanced-search';
-import { setSearchResults } from '../../redux/slices/search-results';
-import { setTotalResults } from '../../redux/slices/total-results';
+import { getSearchResults } from '../../redux/slices/search-results';
 import { resetForm, setSearchQuery } from '../../redux/slices/search-form';
+import { AppDispatch } from '../../redux/store';
+import { useHistory } from 'react-router';
 
 const Home = () => {
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const searchQuery = useSelector((state: RootState) => state.searchForm.searchQuery);
-  const apiKey = process.env.REACT_APP_SPOONACULAR_API_KEY;
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     dispatch(setSearchQuery(target.value));
-    // dispatch(setKeyword(target.value));
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // let searchPath = `/search?query=${searchQuery}`
-    // const intolerancesParam = selectedCheckboxIntolerances.length > 0 ? ``
-    // history.push(`/search?query=${searchQuery}`);
-    // To abstract this to its own hook, pass in searchQuery, selectedIntolerances, selectedCuisines
-    try {
-      // setIsSearchSubmitted(true);
-      const queryString = `&query=${searchQuery}`;
-      let recipesSearchUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=200`;
-
-      if (searchQuery) {
-        recipesSearchUrl = `${recipesSearchUrl}${queryString}`;
-      }
-
-      const fetchRecipes = async () => {
-        await axios.get(recipesSearchUrl).then((response) => {
-          if (response.data && response.data.totalResults === 0) {
-            // setCouldNotFindRecipes(true);
-            // TODO: Handle couldNotFindRecipes
-            console.log('COULD NOT FIND RECIPES');
-          } else {
-            console.log('response.data', response.data);
-            dispatch(setSearchResults(response.data.results));
-            dispatch(setTotalResults(response.data.totalResults));
-            history.push('/search-results');
-          }
-        });
-      };
-      fetchRecipes();
-    } catch (error) {
-      // TODO: Add toast error, or UI indication of some kind
-      console.error(error);
-    }
+    const getRecipes = async () => {
+      await dispatch(getSearchResults({ searchQuery }));
+      history.push('/search-results');
+    };
+    getRecipes();
   };
 
   const setToAdvancedSearch = () => {

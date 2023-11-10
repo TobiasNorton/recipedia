@@ -14,7 +14,7 @@ const SearchResults = () => {
   // const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
 
   const { search } = useLocation();
-  const recipes = useSelector((state: RootState) => state.searchResults);
+  const recipes = useSelector((state: RootState) => state.searchResults.recipes);
   const totalResults = useSelector((state: RootState) => state.totalResults);
   const searchQuery = useSelector((state: RootState) => state.searchForm.searchQuery);
   // const { query } = queryString.parse(search);
